@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Navbar from "@/components/Navbar";
 
 import MovieGrid from "@/components/movies/MovieGrid";
-import HeroCarousel from "@/components/HeroCarousel";
+import Hero from "@/components/hero/Hero";
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,15 +15,9 @@ export default function HomePage() {
 
   return (
     <>
-      <Navbar onSearch={setSearchQuery} showSearch={!heroSearchInView} />
-
-      {/* Hero */}
-      <HeroCarousel />
-
-      {/* Hero search ref — invisible element that tracks visibility */}
+      <Navbar />
+      <Hero onSearch={setSearchQuery} searchQuery={searchQuery} />
       <div ref={heroSearchRef} className="-mt-1 h-1" />
-
-      {/* Main content */}
       <div className="mx-auto max-w-7xl px-4 py-8">
         <MovieGrid query={searchQuery} />
       </div>
