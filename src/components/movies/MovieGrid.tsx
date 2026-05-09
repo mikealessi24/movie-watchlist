@@ -2,8 +2,9 @@
 
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { usePopular } from "@/hooks/movies/usePopular";
+
 import MovieCard from "./MovieCard";
+import { usePopular } from "@/hooks/api/movies/usePopular";
 
 export default function MovieGrid() {
   const {

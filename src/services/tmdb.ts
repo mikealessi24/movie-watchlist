@@ -12,6 +12,14 @@ import type {
 const BASE_URL = process.env.TMDB_BASE_URL;
 const TOKEN = process.env.TMDB_TOKEN;
 
+const DEFAULT_PARAMS = {
+  include_adult: false,
+  certification_country: "US",
+  "certification.lte": "R",
+  with_original_language: "en",
+  "vote_count.gte": 100,
+};
+
 // --- Core fetcher ---
 
 async function tmdbFetch<T>(
@@ -21,7 +29,7 @@ async function tmdbFetch<T>(
 ): Promise<T> {
   const url = new URL(`${BASE_URL}${endpoint}`);
 
-  Object.entries(params).forEach(([key, value]) => {
+  Object.entries({ ...DEFAULT_PARAMS, ...params }).forEach(([key, value]) => {
     url.searchParams.set(key, String(value));
   });
 
@@ -73,7 +81,7 @@ export async function searchMovies(
 }
 
 export async function getPopular(page = 1): Promise<TMDBPopularResponse> {
-  return tmdbFetch<TMDBPopularResponse>("/movie/popular", { page });
+  return tmdbFetch<TMDBPopularResponse>("/discover/movie", { page });
 }
 
 export async function getTrending(
