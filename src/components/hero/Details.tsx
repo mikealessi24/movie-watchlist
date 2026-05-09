@@ -7,7 +7,7 @@ interface DetailProps {
 
 export default function Detail({ movie }: DetailProps) {
   return (
-    <div className="absolute bottom-20 md:bottom-48 left-0 right-0 px-6 pt-8">
+    <div className="absolute bottom-20 md:bottom-48 left-0 right-0 px-8 pt-8">
       <div className="flex flex-col items-start gap-2 max-w-lg">
         <div className="flex items-center gap-2">
           <IconStarFilled

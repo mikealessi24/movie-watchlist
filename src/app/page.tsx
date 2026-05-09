@@ -26,7 +26,7 @@ export default function HomePage() {
         value={searchValue}
         searchRef={heroSearchRef}
       />
-      <div className="mx-auto max-w-7xl px-4 py-8 w-full">
+      <div className="px-8 py-8 w-full">
         <MovieGrid query={debouncedQuery} />
       </div>
     </>

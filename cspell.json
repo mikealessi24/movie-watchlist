@@ -3,7 +3,13 @@
     "ignorePaths": [],
     "dictionaryDefinitions": [],
     "dictionaries": [],
-    "words": [],
-    "ignoreWords": ["tmbd", "TMDB", "watchlist"],
+    "words": [
+        "tabler"
+    ],
+    "ignoreWords": [
+        "tmbd",
+        "TMDB",
+        "watchlist"
+    ],
     "import": []
 }

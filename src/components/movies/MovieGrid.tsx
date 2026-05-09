@@ -34,6 +34,7 @@ export default function MovieGrid({ query = "" }: MovieGridProps) {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  //TODO: Move this server side
   const movies =
     data?.pages
       .flatMap((page) => page.results)
@@ -44,11 +45,11 @@ export default function MovieGrid({ query = "" }: MovieGridProps) {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
         {Array.from({ length: 20 }).map((_, i) => (
           <div
             key={i}
-            className="aspect-[2/3] animate-pulse rounded-lg bg-muted"
+            className="aspect-2/3 animate-pulse rounded-lg bg-muted"
           />
         ))}
       </div>
@@ -80,7 +81,7 @@ export default function MovieGrid({ query = "" }: MovieGridProps) {
           {`Results found for ${query}`}
         </p>
       )}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
         {movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
