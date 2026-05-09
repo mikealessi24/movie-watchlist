@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -12,9 +13,15 @@ interface NavbarProps {
   showSearch?: boolean;
   value?: string;
   onChange?: (query: string) => void;
+  searchBarRef?: React.RefObject<HTMLInputElement | null>;
 }
 
-export default function Navbar({ showSearch, value, onChange }: NavbarProps) {
+export default function Navbar({
+  showSearch,
+  value,
+  onChange,
+  searchBarRef,
+}: NavbarProps) {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
 
@@ -33,7 +40,12 @@ export default function Navbar({ showSearch, value, onChange }: NavbarProps) {
             )}
           >
             <div className="w-full max-w-3xl">
-              <Search inNavbar onChange={onChange} value={value} />
+              <Search
+                inNavbar
+                onChange={onChange}
+                value={value}
+                inputRef={searchBarRef}
+              />
             </div>
           </div>
 

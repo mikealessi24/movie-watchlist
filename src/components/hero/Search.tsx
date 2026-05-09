@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,12 +10,14 @@ interface SearchProps {
   onChange?: (query: string) => void;
   value?: string;
   inNavbar?: boolean;
+  inputRef?: React.RefObject<HTMLInputElement | null>;
 }
 
 export default function Search({
   onChange,
   value = "",
   inNavbar,
+  inputRef,
 }: SearchProps) {
   const SearchBar = (
     <div
@@ -26,6 +29,7 @@ export default function Search({
       )}
     >
       <Input
+        ref={inputRef}
         value={value}
         onChange={(e) => onChange?.(e.target.value)}
         placeholder="Search movies..."

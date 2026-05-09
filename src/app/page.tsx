@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import Navbar from "@/components/Navbar";
 import MovieGrid from "@/components/movies/MovieGrid";
@@ -13,6 +13,25 @@ export default function HomePage() {
   const { ref: heroSearchRef, inView: heroSearchInView } = useInView({
     threshold: 0,
   });
+  const heroBottomRef = useRef<HTMLDivElement>(null);
+  const searchBarRef = useRef<HTMLInputElement>(null);
+  const didAutoScroll = useRef(false);
+
+  useEffect(() => {
+    if (debouncedQuery && !didAutoScroll.current) {
+      didAutoScroll.current = true;
+      const el = heroBottomRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.top > 0) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        setTimeout(() => searchBarRef.current?.focus(), 400);
+      }
+    }
+    if (!debouncedQuery) {
+      didAutoScroll.current = false;
+    }
+  }, [debouncedQuery]);
 
   return (
     <>
@@ -20,11 +39,13 @@ export default function HomePage() {
         showSearch={!heroSearchInView}
         value={searchValue}
         onChange={setSearchValue}
+        searchBarRef={searchBarRef}
       />
       <Hero
         onChange={setSearchValue}
         value={searchValue}
         searchRef={heroSearchRef}
+        bottomRef={heroBottomRef}
       />
       <div className="px-8 py-8 w-full">
         <MovieGrid query={debouncedQuery} />
