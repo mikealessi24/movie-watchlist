@@ -10,7 +10,7 @@ import type {
 } from "@/types/tmdb";
 
 const BASE_URL = process.env.TMDB_BASE_URL;
-const API_KEY = process.env.TMDB_API_KEY;
+const TOKEN = process.env.TMDB_TOKEN;
 
 // --- Core fetcher ---
 
@@ -27,7 +27,7 @@ async function tmdbFetch<T>(
 
   const res = await fetch(url.toString(), {
     headers: {
-      Authorization: `Bearer ${API_KEY}`,
+      Authorization: `Bearer ${TOKEN}`,
       "Content-Type": "application/json",
     },
     next: { revalidate },
