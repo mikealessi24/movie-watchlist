@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import Search from "@/components/hero/Search";
 import { cn } from "@/lib/utils";
 import SignInDialog from "@/components/SignInDialog";
+import ThemeToggle from "./ThemeToggle";
 
 interface NavbarProps {
   showSearch?: boolean;
@@ -48,7 +49,7 @@ export default function Navbar({
               />
             </div>
           </div>
-
+          <ThemeToggle />
           <div className="flex-none flex items-center gap-3">
             {session ? (
               <>
