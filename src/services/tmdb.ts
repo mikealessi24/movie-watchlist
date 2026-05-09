@@ -57,7 +57,7 @@ export function getPosterUrl(path: string | null, size = "w500"): string {
   return `https://image.tmdb.org/t/p/${size}${path}`;
 }
 
-export function getBackdropUrl(path: string | null, size = "w1280"): string {
+export function getBackdropUrl(path: string | null, size = "original"): string {
   if (!path) return "/placeholder-backdrop.png";
   return `https://image.tmdb.org/t/p/${size}${path}`;
 }
