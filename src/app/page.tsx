@@ -18,7 +18,7 @@ export default function HomePage() {
       <Navbar />
       <Hero onSearch={setSearchQuery} searchQuery={searchQuery} />
       <div ref={heroSearchRef} className="-mt-1 h-1" />
-      <div className="mx-auto max-w-7xl px-4 py-8">
+      <div className="mx-auto max-w-7xl px-4 py-8 w-full">
         <MovieGrid query={searchQuery} />
       </div>
     </>
