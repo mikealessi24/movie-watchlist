@@ -47,7 +47,7 @@ export default function SignInDialog({ open, onOpenChange }: SignInModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="h-screen w-screen max-w-screen rounded-none sm:rounded-xl sm:h-auto sm:max-w-md">
         {state === "idle" && (
           <>
             <DialogHeader>

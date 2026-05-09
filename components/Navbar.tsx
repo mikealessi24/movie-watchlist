@@ -27,7 +27,7 @@ export default function Navbar() {
                   {session.user?.email?.[0].toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <Button variant="ghost" size="sm" onClick={() => signOut()}>
+              <Button variant="outline" onClick={() => signOut()}>
                 Sign out
               </Button>
             </div>
