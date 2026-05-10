@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getPosterUrl } from "@/services/tmdb";
 import type { TMDBMovie } from "@/types/tmdb";
 import { IconStarFilled, IconBookmark } from "@tabler/icons-react";
-import WatchlistButton from "../WatchlistButton";
+import WatchlistButton from "../watchlist/WatchlistButton";
 
 interface MovieCardProps {
   movie: TMDBMovie;

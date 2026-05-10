@@ -57,7 +57,7 @@ export default function MovieGrid({ query = "" }: MovieGridProps) {
 
   if (isError) {
     return (
-      <div className="flex min-h-100 items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <p className="text-muted-foreground">
           Something went wrong. Please try again.
         </p>
@@ -67,14 +67,14 @@ export default function MovieGrid({ query = "" }: MovieGridProps) {
 
   if (isSearching && movies.length === 0) {
     return (
-      <div className="flex min-h-100 items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <p className="text-muted-foreground">{`No results found for ${query}`}</p>
       </div>
     );
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full min-h-screen">
       {isSearching && (
         <p className="mb-4 text-sm text-muted-foreground">
           {`Results found for ${query}`}

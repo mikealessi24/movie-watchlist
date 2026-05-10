@@ -6,7 +6,7 @@ import { TMDBMovie } from "@/types/tmdb";
 import { getBackdropUrl } from "@/services/tmdb";
 import Detail from "./Details";
 
-import WatchlistButton from "../WatchlistButton";
+import WatchlistButton from "../watchlist/WatchlistButton";
 
 interface HeroCarouselProps {
   movies: TMDBMovie[];

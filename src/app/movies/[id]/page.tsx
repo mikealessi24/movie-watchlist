@@ -9,7 +9,7 @@ import {
   getDirector,
 } from "@/services/tmdb";
 import { IconStarFilled } from "@tabler/icons-react";
-import WatchlistButton from "@/components/WatchlistButton";
+import WatchlistButton from "@/components/watchlist/WatchlistButton";
 
 interface MoviePageProps {
   params: Promise<{ id: string }>;
