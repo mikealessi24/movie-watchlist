@@ -2,8 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { getPosterUrl } from "@/services/tmdb";
 import type { TMDBMovie } from "@/types/tmdb";
-import { IconStarFilled, IconBookmark } from "@tabler/icons-react";
+import { IconStarFilled } from "@tabler/icons-react";
 import WatchlistButton from "../watchlist/WatchlistButton";
+import { Badge } from "@/components/ui/badge";
 
 interface MovieCardProps {
   movie: TMDBMovie;
@@ -25,15 +26,15 @@ export default function MovieCard({ movie }: MovieCardProps) {
         <div className="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100 rounded-lg" />
 
         {/* Watchlist button */}
-        <div className="absolute top-2 right-2 z-10">
+        <div className="absolute bottom-2 right-2 z-10">
           <WatchlistButton movie={movie} />
         </div>
 
         {/* Rating badge */}
-        <div className="flex items-center gap-0.5 absolute top-2 left-2 rounded-full bg-black/70 px-2 py-0.5 text-xs font-medium text-white">
-          <IconStarFilled height={14} width={14} className=" text-yellow-300" />
+        <Badge variant="rating" className="absolute top-2 left-2 z-10">
+          <IconStarFilled className="text-primary" data-icon="inline-start" />
           {movie.vote_average.toFixed(1)}
-        </div>
+        </Badge>
       </div>
 
       {/* Info below poster */}

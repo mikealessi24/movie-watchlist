@@ -8,6 +8,7 @@ import { useRemoveFromWatchlist } from "@/hooks/api/watchlist/useRemoveFromWatch
 import type { TMDBMovie } from "@/types/tmdb";
 import { WatchlistEntryWithMovie } from "@/types/watchlist";
 import React from "react";
+import { Button } from "@/components/ui/button";
 
 interface WatchlistButtonProps {
   movie: TMDBMovie;
@@ -48,20 +49,21 @@ export default function WatchlistButton({
   }
 
   return (
-    // TODO: update style and use shadcn ui
-    <button
+    <Button
+      size="icon-lg"
+      variant="watchlist"
       onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         e.stopPropagation();
         handleClick();
       }}
-      className="rounded-full bg-background/70 p-3 text-foreground backdrop-blur-sm transition cursor-pointer"
+      className="cursor-pointer"
     >
       {optimisticInWatchlist ? (
         <IconBookmarkFilled size={size} className="text-primary" />
       ) : (
         <IconBookmark size={size} />
       )}
-    </button>
+    </Button>
   );
 }
