@@ -7,9 +7,9 @@ export async function GET(req: NextRequest) {
   const page = Number(searchParams.get("page") ?? 1);
 
   try {
-    const res = await getPopular(page);
-    const data = { ...res, results: cleanResults(res.results) };
-    return NextResponse.json(data);
+    const data = await getPopular(page);
+    const cleaned = cleanResults(data.results);
+    return NextResponse.json({ ...data, results: cleaned });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

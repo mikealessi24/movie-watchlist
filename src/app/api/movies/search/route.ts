@@ -15,13 +15,18 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const res = await searchMovies(query, page);
-    const data = { ...res, results: cleanResults(res.results) };
-    return NextResponse.json(data);
+    const data = await searchMovies(query, page);
+    const cleaned = cleanResults(data.results);
+
+    return NextResponse.json({
+      ...data,
+      results: cleaned,
+      total_pages: cleaned.length === 0 ? page : data.total_pages,
+    });
   } catch (error) {
-    console.error(error);
+    console.error("[/api/movies/search]", error);
     return NextResponse.json(
-      { error: "Failed to search movies." },
+      { error: "Failed to search movies" },
       { status: 500 },
     );
   }

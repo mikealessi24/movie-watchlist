@@ -34,7 +34,6 @@ export default function MovieGrid({ query = "" }: MovieGridProps) {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  //TODO: Move this server side
   const movies =
     data?.pages
       .flatMap((page) => page.results)
