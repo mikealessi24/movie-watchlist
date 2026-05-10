@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
+import { getMovie } from "@/services/tmdb";
 
 export async function GET() {
   const session = await getServerSession(authOptions);
@@ -45,11 +46,11 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { movie: movieData } = body;
+    const { tmdbId } = body;
 
-    if (!movieData?.tmdbId) {
+    if (!tmdbId || isNaN(Number(tmdbId))) {
       return NextResponse.json(
-        { error: "Movie data is required" },
+        { error: "a valid tmdbId is required" },
         { status: 400 },
       );
     }
@@ -62,12 +63,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
+    // get movie from tmdb
+    const movieData = await getMovie(Number(tmdbId));
+
     // upsert movie into cache
     const movie = await prisma.movie.upsert({
-      where: { tmdbId: movieData.tmdbId },
+      where: { tmdbId: movieData.id },
       update: { cachedAt: new Date() },
       create: {
-        tmdbId: movieData.tmdbId,
+        tmdbId: movieData.id,
         title: movieData.title,
         posterPath: movieData.poster_path ?? null,
         overview: movieData.overview ?? null,
@@ -89,7 +93,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(entry, { status: 201 });
   } catch (error) {
-    // P2002 = unique constraint violation (already in watchlist)
     if (
       error instanceof Prisma.PrismaClientKnownRequestError &&
       error.code === "P2002"

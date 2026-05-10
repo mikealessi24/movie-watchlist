@@ -3,15 +3,13 @@ import Link from "next/link";
 import { getPosterUrl } from "@/services/tmdb";
 import type { TMDBMovie } from "@/types/tmdb";
 import { IconStarFilled, IconBookmark } from "@tabler/icons-react";
-import { useSession } from "next-auth/react";
+import WatchlistButton from "../WatchlistButton";
 
 interface MovieCardProps {
   movie: TMDBMovie;
 }
 
 export default function MovieCard({ movie }: MovieCardProps) {
-  const { data: session } = useSession();
-
   return (
     <Link href={`/movies/${movie.id}`} className="group relative block">
       <div className="relative aspect-2/3 overflow-hidden rounded-lg bg-muted">
@@ -27,14 +25,9 @@ export default function MovieCard({ movie }: MovieCardProps) {
         <div className="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100 rounded-lg" />
 
         {/* Watchlist button */}
-        {session && (
-          <button
-            className="absolute top-2 right-2 rounded-full bg-black/70 p-1 text-white"
-            onClick={(e) => e.preventDefault()}
-          >
-            <IconBookmark size={16} />
-          </button>
-        )}
+        <div className="absolute top-2 right-2 z-10">
+          <WatchlistButton movie={movie} />
+        </div>
 
         {/* Rating badge */}
         <div className="flex items-center gap-0.5 absolute top-2 left-2 rounded-full bg-black/70 px-2 py-0.5 text-xs font-medium text-white">

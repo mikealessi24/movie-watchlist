@@ -9,7 +9,7 @@ export function useAddToWatchlist() {
 
   return useMutation({
     mutationFn: async (movie: TMDBMovie) => {
-      const { data } = await axios.post("/api/watchlist", { movie });
+      const { data } = await axios.post("/api/watchlist", { tmdbId: movie.id });
       return data;
     },
     onSuccess: (_data, movie) => {

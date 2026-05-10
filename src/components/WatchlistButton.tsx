@@ -7,6 +7,7 @@ import { useAddToWatchlist } from "@/hooks/api/watchlist/useAddToWatchlist";
 import { useRemoveFromWatchlist } from "@/hooks/api/watchlist/useRemoveFromWatchlist";
 import type { TMDBMovie } from "@/types/tmdb";
 import { WatchlistEntryWithMovie } from "@/types/watchlist";
+import React from "react";
 
 interface WatchlistButtonProps {
   movie: TMDBMovie;
@@ -18,11 +19,13 @@ export default function WatchlistButton({
   size = 16,
 }: WatchlistButtonProps) {
   const { data: session } = useSession();
-  const { data: watchlist } = useWatchlist();
+  const { data: watchlist, isLoading } = useWatchlist();
   const add = useAddToWatchlist();
   const remove = useRemoveFromWatchlist();
 
   if (!session) return null;
+  // TODO: maybe update this with a skeleton
+  if (isLoading) return null;
 
   const entry = watchlist?.find(
     (e: WatchlistEntryWithMovie) => e.movie.tmdbId === movie.id,
@@ -41,7 +44,11 @@ export default function WatchlistButton({
   return (
     // TODO: update style and use shadcn ui
     <button
-      onClick={handleClick}
+      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleClick();
+      }}
       disabled={isPending}
       className="rounded-full bg-background/70 p-3 text-foreground backdrop-blur-sm disabled:opacity-50 transition cursor-pointer"
     >

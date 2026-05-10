@@ -9,8 +9,6 @@ import {
   getDirector,
 } from "@/services/tmdb";
 import { IconStarFilled } from "@tabler/icons-react";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import WatchlistButton from "@/components/WatchlistButton";
 
 interface MoviePageProps {
@@ -34,8 +32,6 @@ export default async function MoviePage({ params }: MoviePageProps) {
     ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m`
     : null;
 
-  const session = await getServerSession(authOptions);
-
   return (
     <div className="min-h-screen">
       {/* Backdrop hero */}
@@ -53,11 +49,10 @@ export default async function MoviePage({ params }: MoviePageProps) {
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
 
         {/* Add to watchlist button — top right */}
-        {session && (
-          <div className="absolute top-8 right-8">
-            <WatchlistButton movie={movie} size={36} />
-          </div>
-        )}
+
+        <div className="absolute top-8 right-8">
+          <WatchlistButton movie={movie} size={36} />
+        </div>
       </div>
 
       {/* Poster + info row */}
