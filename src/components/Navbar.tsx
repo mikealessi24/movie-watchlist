@@ -5,10 +5,19 @@ import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import Search from "@/components/hero/Search";
 import { cn } from "@/lib/utils";
 import SignInDialog from "@/components/SignInDialog";
 import ThemeToggle from "./ThemeToggle";
+import Link from "next/link";
+import { IconLogout, IconList } from "@tabler/icons-react";
 
 interface NavbarProps {
   showSearch?: boolean;
@@ -30,9 +39,7 @@ export default function Navbar({
     <>
       <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
         <div className="mx-auto flex h-16 items-center gap-4 px-8">
-          <span className="text-xl text-primary font-semibold tracking-tight">
-            M
-          </span>
+          <span className="text-xl text-primary font-semibold tracking-tight"></span>
 
           <div
             className={cn(
@@ -52,17 +59,35 @@ export default function Navbar({
           <ThemeToggle />
           <div className="flex-none flex items-center gap-3">
             {session ? (
-              <>
-                <Avatar className="h-8 w-8 cursor-pointer">
-                  <AvatarImage src={session.user?.image ?? ""} />
-                  <AvatarFallback>
-                    {session.user?.email?.[0].toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
-                <Button variant="ghost" size="sm" onClick={() => signOut()}>
-                  Sign out
-                </Button>
-              </>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar className="h-8 w-8 cursor-pointer">
+                    <AvatarImage src={session.user?.image ?? ""} />
+                    <AvatarFallback>
+                      {session.user?.email?.[0].toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem>
+                    <Link
+                      href="/watchlist"
+                      className="flex items-center gap-2 w-full cursor-pointer"
+                    >
+                      <IconList size={16} />
+                      My list
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() => signOut()}
+                    className="flex items-center gap-2 cursor-pointer text-destructive focus:text-destructive"
+                  >
+                    <IconLogout size={16} />
+                    Sign out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <Button variant="ghost" size="sm" onClick={() => setOpen(true)}>
                 Sign in
