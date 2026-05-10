@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { watchlistKeys } from "@/lib/queryKeys";
 import type { TMDBMovie } from "@/types/tmdb";
+import { WatchlistEntryWithMovie } from "@/types/watchlist";
 
 export function useAddToWatchlist() {
   const queryClient = useQueryClient();
@@ -12,8 +13,11 @@ export function useAddToWatchlist() {
       const { data } = await axios.post("/api/watchlist", { tmdbId: movie.id });
       return data;
     },
-    onSuccess: (_data, movie) => {
-      queryClient.invalidateQueries({ queryKey: watchlistKeys.all });
+    onSuccess: (data, movie) => {
+      queryClient.setQueryData(
+        watchlistKeys.lists(),
+        (old: WatchlistEntryWithMovie[] = []) => [...old, data],
+      );
       toast.success(`Added ${movie.title} to your list`);
     },
     onError: () => {

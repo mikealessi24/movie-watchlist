@@ -24,14 +24,20 @@ export default function WatchlistButton({
   const remove = useRemoveFromWatchlist();
 
   if (!session) return null;
-  // TODO: maybe update this with a skeleton
   if (isLoading) return null;
 
   const entry = watchlist?.find(
     (e: WatchlistEntryWithMovie) => e.movie.tmdbId === movie.id,
   );
-  const isInWatchlist = !!entry;
-  const isPending = add.isPending || remove.isPending;
+  const isInWatchlist = Boolean(entry);
+
+  function getOptimisticState() {
+    if (add.isPending) return true;
+    if (remove.isPending) return false;
+    return isInWatchlist;
+  }
+
+  const optimisticInWatchlist = getOptimisticState();
 
   function handleClick() {
     if (isInWatchlist) {
@@ -49,10 +55,9 @@ export default function WatchlistButton({
         e.stopPropagation();
         handleClick();
       }}
-      disabled={isPending}
-      className="rounded-full bg-background/70 p-3 text-foreground backdrop-blur-sm disabled:opacity-50 transition cursor-pointer"
+      className="rounded-full bg-background/70 p-3 text-foreground backdrop-blur-sm transition cursor-pointer"
     >
-      {isInWatchlist ? (
+      {optimisticInWatchlist ? (
         <IconBookmarkFilled size={size} className="text-primary" />
       ) : (
         <IconBookmark size={size} />

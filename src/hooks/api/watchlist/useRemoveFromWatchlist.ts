@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 import { watchlistKeys } from "@/lib/queryKeys";
-import { DeleteWatchlistResponse } from "@/types/watchlist";
+import { WatchlistEntryWithMovie } from "@/types/watchlist";
 
 export function useRemoveFromWatchlist() {
   const queryClient = useQueryClient();
@@ -12,8 +12,12 @@ export function useRemoveFromWatchlist() {
       const { data } = await axios.delete(`/api/watchlist/${entryId}`);
       return data;
     },
-    onSuccess: (data: DeleteWatchlistResponse) => {
-      queryClient.invalidateQueries({ queryKey: watchlistKeys.all });
+    onSuccess: (data) => {
+      queryClient.setQueryData(
+        watchlistKeys.lists(),
+        (old: WatchlistEntryWithMovie[] = []) =>
+          old.filter((entry) => entry.id !== data.id),
+      );
       toast.success(`Removed ${data.movie.title} from your list`);
     },
     onError: () => {
