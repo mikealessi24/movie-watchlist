@@ -2,12 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 import { watchlistKeys } from "@/lib/queryKeys";
-import { TMDBMovie } from "@/types/tmdb";
-
-interface DeleteWatchlistResponse {
-  success: boolean;
-  movie: TMDBMovie;
-}
+import { DeleteWatchlistResponse } from "@/types/watchlist";
 
 export function useRemoveFromWatchlist() {
   const queryClient = useQueryClient();
