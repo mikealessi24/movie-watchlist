@@ -44,7 +44,7 @@ export default function MovieGrid({ query = "" }: MovieGridProps) {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6">
         {Array.from({ length: 20 }).map((_, i) => (
           <div
             key={i}
@@ -80,7 +80,7 @@ export default function MovieGrid({ query = "" }: MovieGridProps) {
           {`Results found for ${query}`}
         </p>
       )}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6">
         {movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}

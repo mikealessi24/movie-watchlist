@@ -9,6 +9,8 @@ import {
   getDirector,
 } from "@/services/tmdb";
 import { IconBookmark, IconStarFilled } from "@tabler/icons-react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 interface MoviePageProps {
   params: Promise<{ id: string }>;
@@ -31,6 +33,8 @@ export default async function MoviePage({ params }: MoviePageProps) {
     ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m`
     : null;
 
+  const session = await getServerSession(authOptions);
+
   return (
     <div className="min-h-screen">
       {/* Backdrop hero */}
@@ -48,11 +52,11 @@ export default async function MoviePage({ params }: MoviePageProps) {
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
 
         {/* Add to watchlist button — top right */}
-        <div className="absolute top-6 right-6">
-          <button className="rounded-full bg-black/50 p-3 text-white backdrop-blur-sm">
+        {session && (
+          <button className="absolute top-8 right-8 rounded-full bg-black/50 p-3 text-white backdrop-blur-sm">
             <IconBookmark size={36} />
           </button>
-        </div>
+        )}
       </div>
 
       {/* Poster + info row */}
