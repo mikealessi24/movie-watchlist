@@ -37,11 +37,12 @@ export async function DELETE(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    await prisma.watchlistEntry.delete({
+    const deleted = await prisma.watchlistEntry.delete({
       where: { id },
+      include: { movie: true },
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, movie: deleted.movie });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

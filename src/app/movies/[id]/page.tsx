@@ -8,9 +8,10 @@ import {
   getTrailer,
   getDirector,
 } from "@/services/tmdb";
-import { IconBookmark, IconStarFilled } from "@tabler/icons-react";
+import { IconStarFilled } from "@tabler/icons-react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import WatchlistButton from "@/components/WatchlistButton";
 
 interface MoviePageProps {
   params: Promise<{ id: string }>;
@@ -53,9 +54,9 @@ export default async function MoviePage({ params }: MoviePageProps) {
 
         {/* Add to watchlist button — top right */}
         {session && (
-          <button className="absolute top-8 right-8 rounded-full bg-black/50 p-3 text-white backdrop-blur-sm">
-            <IconBookmark size={36} />
-          </button>
+          <div className="absolute top-8 right-8">
+            <WatchlistButton movie={movie} size={36} />
+          </div>
         )}
       </div>
 
