@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getPosterUrl } from "@/services/tmdb";
 import type { TMDBMovie } from "@/types/tmdb";
+import { IconStarFilled, IconBookmark } from "@tabler/icons-react";
 
 interface MovieCardProps {
   movie: TMDBMovie;
@@ -10,7 +11,7 @@ interface MovieCardProps {
 export default function MovieCard({ movie }: MovieCardProps) {
   return (
     <Link href={`/movies/${movie.id}`} className="group relative block">
-      <div className="relative aspect-[2/3] overflow-hidden rounded-lg bg-muted">
+      <div className="relative aspect-2/3 overflow-hidden rounded-lg bg-muted">
         <Image
           src={getPosterUrl(movie.poster_path)}
           alt={movie.title}
@@ -22,9 +23,18 @@ export default function MovieCard({ movie }: MovieCardProps) {
         {/* Overlay on hover */}
         <div className="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100 rounded-lg" />
 
+        {/* Watchlist button */}
+        <button
+          className="absolute top-2 right-2 rounded-full bg-black/70 p-1 text-white"
+          onClick={(e) => e.preventDefault()}
+        >
+          <IconBookmark size={16} />
+        </button>
+
         {/* Rating badge */}
-        <div className="absolute top-2 left-2 rounded-full bg-black/70 px-2 py-0.5 text-xs font-medium text-white">
-          ★ {movie.vote_average.toFixed(1)}
+        <div className="flex items-center gap-0.5 absolute top-2 left-2 rounded-full bg-black/70 px-2 py-0.5 text-xs font-medium text-white">
+          <IconStarFilled height={14} width={14} className=" text-yellow-300" />
+          {movie.vote_average.toFixed(1)}
         </div>
       </div>
 

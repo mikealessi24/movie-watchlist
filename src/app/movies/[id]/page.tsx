@@ -8,6 +8,7 @@ import {
   getTrailer,
   getDirector,
 } from "@/services/tmdb";
+import { IconStarFilled } from "@tabler/icons-react";
 
 interface MoviePageProps {
   params: Promise<{ id: string }>;
@@ -48,7 +49,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
 
         {/* Add to watchlist button — top right */}
         <div className="absolute top-6 right-6">
-          <button className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-full font-medium hover:bg-white/20 transition">
+          <button className="bg-white/10 backdrop-blur-md border border-white/20 text-foreground px-6 py-3 rounded-full font-medium hover:bg-white/20 transition">
             + Add to Watchlist
           </button>
         </div>
@@ -59,7 +60,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
         <div className="flex gap-8 -mt-32 relative z-10">
           {/* Poster */}
           <div className="hidden sm:block shrink-0 w-48 md:w-56 lg:w-64">
-            <div className="relative aspect-[2/3] rounded-lg overflow-hidden shadow-2xl">
+            <div className="relative aspect-2/3 rounded-lg overflow-hidden shadow-2xl">
               <Image
                 src={getPosterUrl(movie.poster_path)}
                 alt={movie.title}
@@ -71,26 +72,33 @@ export default async function MoviePage({ params }: MoviePageProps) {
           </div>
 
           {/* Info */}
-          <div className="flex flex-col justify-end pb-4 text-white">
+          <div className="flex flex-col justify-end pb-4 text-foreground">
             <h1 className="text-3xl md:text-4xl font-bold drop-shadow-lg">
               {movie.title}
             </h1>
             {movie.tagline && (
-              <p className="text-white/60 italic mt-1">{movie.tagline}</p>
+              <p className="text-foreground/60 italic mt-1">{movie.tagline}</p>
             )}
-            <div className="flex flex-wrap items-center gap-3 mt-3 text-sm text-white/80">
+            <div className="flex flex-wrap items-center gap-3 mt-3 text-sm text-foreground/80">
               {movie.release_date && (
                 <span>{movie.release_date.slice(0, 4)}</span>
               )}
               {runtime && <span>{runtime}</span>}
-              <span>★ {movie.vote_average.toFixed(1)}</span>
+              <div className="flex items-center gap-0.5 rounded-full text-sm text-foreground">
+                <IconStarFilled
+                  height={14}
+                  width={14}
+                  className=" text-yellow-300"
+                />
+                {movie.vote_average.toFixed(1)}
+              </div>
               {director && <span>Dir. {director}</span>}
             </div>
             <div className="flex flex-wrap gap-2 mt-3">
               {movie.genres.map((genre) => (
                 <span
                   key={genre.id}
-                  className="bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs px-3 py-1 rounded-full"
+                  className="bg-white/10 backdrop-blur-sm border border-white/20 text-foreground text-xs px-3 py-1 rounded-full"
                 >
                   {genre.name}
                 </span>

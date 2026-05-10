@@ -7,6 +7,7 @@ import Link from "next/link";
 import { TMDBMovie } from "@/types/tmdb";
 import { getBackdropUrl } from "@/services/tmdb";
 import Detail from "./Details";
+import { IconBookmark } from "@tabler/icons-react";
 
 interface HeroCarouselProps {
   movies: TMDBMovie[];
@@ -33,9 +34,16 @@ export default function HeroCarousel({ movies }: HeroCarouselProps) {
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="absolute top-4 left-4 flex items-center justify-center h-8 w-8 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white text-xs font-bold">
+                <button
+                  className="absolute top-5 right-5 rounded-full bg-black/50 p-3 text-white backdrop-blur-sm"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  <IconBookmark size={36} />
+                </button>
+
+                {/* <div className="absolute bottom-6 right-6 text-[8rem] font-black leading-none text-white/20 select-none">
                   {index + 1}
-                </div>
+                </div> */}
                 <Detail movie={movie} />
               </div>
             </Link>
