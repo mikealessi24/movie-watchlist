@@ -8,7 +8,7 @@ import {
   getTrailer,
   getDirector,
 } from "@/services/tmdb";
-import { IconStarFilled } from "@tabler/icons-react";
+import { IconBookmark, IconStarFilled } from "@tabler/icons-react";
 
 interface MoviePageProps {
   params: Promise<{ id: string }>;
@@ -49,8 +49,8 @@ export default async function MoviePage({ params }: MoviePageProps) {
 
         {/* Add to watchlist button — top right */}
         <div className="absolute top-6 right-6">
-          <button className="bg-white/10 backdrop-blur-md border border-white/20 text-foreground px-6 py-3 rounded-full font-medium hover:bg-white/20 transition">
-            + Add to Watchlist
+          <button className="rounded-full bg-black/50 p-3 text-white backdrop-blur-sm">
+            <IconBookmark size={36} />
           </button>
         </div>
       </div>

@@ -7,7 +7,6 @@ export async function GET(req: NextRequest) {
   const page = Number(searchParams.get("page") ?? 1);
 
   try {
-    console.info("Fetching popular movies: /movie/popular");
     const res = await getPopular(page);
     const data = { ...res, results: cleanResults(res.results) };
     return NextResponse.json(data);
