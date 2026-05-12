@@ -51,7 +51,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
         {/* Add to watchlist button — top right */}
 
         <div className="absolute top-8 right-8">
-          <WatchlistButton movie={movie} size={36} />
+          <WatchlistButton movie={movie} size="icon-xl" />
         </div>
       </div>
 

@@ -8,16 +8,19 @@ import { useRemoveFromWatchlist } from "@/hooks/api/watchlist/useRemoveFromWatch
 import type { TMDBMovie } from "@/types/tmdb";
 import { WatchlistEntryWithMovie } from "@/types/watchlist";
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { VariantProps } from "class-variance-authority";
+
+type ButtonSize = VariantProps<typeof buttonVariants>["size"];
 
 interface WatchlistButtonProps {
   movie: TMDBMovie;
-  size?: number;
+  size?: ButtonSize;
 }
 
 export default function WatchlistButton({
   movie,
-  size = 16,
+  size = "icon-lg",
 }: WatchlistButtonProps) {
   const { data: session } = useSession();
   const { data: watchlist, isLoading } = useWatchlist();
@@ -50,7 +53,7 @@ export default function WatchlistButton({
 
   return (
     <Button
-      size="icon-lg"
+      size={size}
       variant="watchlist"
       onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -60,9 +63,9 @@ export default function WatchlistButton({
       className="cursor-pointer"
     >
       {optimisticInWatchlist ? (
-        <IconBookmarkFilled size={size} className="text-primary" />
+        <IconBookmarkFilled className="text-primary" />
       ) : (
-        <IconBookmark size={size} />
+        <IconBookmark />
       )}
     </Button>
   );

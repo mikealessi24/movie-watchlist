@@ -12,7 +12,7 @@ export default function Detail({ movie }: DetailProps) {
         <div className="flex items-center gap-2">
           <IconStarFilled
             stroke={1.5}
-            className="text-xl md:text-2xl text-yellow-300"
+            className="text-xl md:text-2xl text-primary"
           />
           <span className="text-white text-lg md:text-xl font-semibold">
             {movie.vote_average.toFixed(1)}

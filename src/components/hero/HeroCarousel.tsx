@@ -33,8 +33,8 @@ export default function HeroCarousel({ movies }: HeroCarouselProps) {
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="absolute top-5 right-5">
-                  <WatchlistButton movie={movie} size={36} />
+                <div className="absolute top-8 right-8">
+                  <WatchlistButton movie={movie} size="icon-xl" />
                 </div>
 
                 {/* <div className="absolute bottom-6 right-6 text-[8rem] font-black leading-none text-white/20 select-none">
