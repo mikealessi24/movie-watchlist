@@ -24,7 +24,10 @@ export default function HomePage() {
       if (!el) return;
       const rect = el.getBoundingClientRect();
       if (rect.top > 0) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.scrollTo({
+          top: window.scrollY + rect.top - 48,
+          behavior: "smooth",
+        });
         setTimeout(() => searchBarRef.current?.focus(), 400);
       }
     }
