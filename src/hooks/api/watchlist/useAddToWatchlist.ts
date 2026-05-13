@@ -13,12 +13,12 @@ export function useAddToWatchlist() {
       const { data } = await axios.post("/api/watchlist", { tmdbId: movie.id });
       return data;
     },
-    onSuccess: (data, movie) => {
+    onSuccess: (data) => {
       queryClient.setQueryData(
         watchlistKeys.lists(),
         (old: WatchlistEntryWithMovie[] = []) => [...old, data],
       );
-      toast.success(`Added ${movie.title} to your list`);
+      toast.success(`Added to your list`);
     },
     onError: () => {
       toast.error("Failed to add");

@@ -12,13 +12,13 @@ export function useRemoveFromWatchlist() {
       const { data } = await axios.delete(`/api/watchlist/${entryId}`);
       return data;
     },
-    onSuccess: (data) => {
+    onSuccess: (data, entryId) => {
       queryClient.setQueryData(
         watchlistKeys.lists(),
         (old: WatchlistEntryWithMovie[] = []) =>
-          old.filter((entry) => entry.id !== data.id),
+          old.filter((entry) => entry.id !== entryId),
       );
-      toast.success(`Removed ${data.movie.title} from your list`);
+      toast.success(`Removed from your list`);
     },
     onError: () => {
       toast.error("Failed to remove");
