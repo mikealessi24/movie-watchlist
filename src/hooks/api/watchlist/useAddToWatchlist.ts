@@ -18,7 +18,12 @@ export function useAddToWatchlist() {
         watchlistKeys.lists(),
         (old: WatchlistEntryWithMovie[] = []) => [...old, data],
       );
-      toast.success(`Added to your list`);
+      toast.success(`Added to your list`, {
+        action: {
+          label: "View list",
+          onClick: () => (window.location.href = "/watchlist"),
+        },
+      });
     },
     onError: () => {
       toast.error("Failed to add");
