@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
+import { logError } from "@/lib/logger";
 
 export async function DELETE(
   req: NextRequest,
@@ -13,9 +14,9 @@ export async function DELETE(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  try {
-    const { id } = await params;
+  const { id } = await params;
 
+  try {
     const entry = await prisma.watchlistEntry.findUnique({
       where: { id },
     });
@@ -35,7 +36,7 @@ export async function DELETE(
 
     return NextResponse.json(deleted);
   } catch (error) {
-    console.error(error);
+    logError(`POST /api/watchlist/${id}`, error);
     return NextResponse.json(
       { error: "Failed to remove from watchlist" },
       { status: 500 },

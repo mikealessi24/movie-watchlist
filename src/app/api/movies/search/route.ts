@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { searchMovies } from "@/services/tmdb";
 import { cleanResults } from "@/lib/cleanResults";
+import { logError } from "@/lib/logger";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -24,7 +25,7 @@ export async function GET(req: NextRequest) {
       total_pages: cleaned.length === 0 ? page : data.total_pages,
     });
   } catch (error) {
-    console.error("[/api/movies/search]", error);
+    logError(`GET /api/movies/search`, error);
     return NextResponse.json(
       { error: "Failed to search movies" },
       { status: 500 },

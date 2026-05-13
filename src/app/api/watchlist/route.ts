@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { getMovie } from "@/services/tmdb";
+import { logError } from "@/lib/logger";
 
 export async function GET() {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -21,7 +22,7 @@ export async function GET() {
 
     return NextResponse.json(watchlist);
   } catch (error) {
-    console.error(error);
+    logError(`GET /api/watchlist`, error);
     return NextResponse.json(
       { error: "Failed to fetch watchlist" },
       { status: 500 },
@@ -83,7 +84,7 @@ export async function POST(req: NextRequest) {
         { status: 409 },
       );
     }
-    console.error(error);
+    logError(`POST /api/watchlist`, error);
     return NextResponse.json(
       { error: "Failed to add to watchlist" },
       { status: 500 },

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getTrending } from "@/services/tmdb";
 import { cleanResults } from "@/lib/cleanResults";
+import { logError } from "@/lib/logger";
 
 export async function GET() {
   try {
@@ -10,7 +11,7 @@ export async function GET() {
       results: cleanResults(data.results).slice(0, 10),
     });
   } catch (error) {
-    console.log(error);
+    logError(`GET /api/movies/trending`, error);
     return NextResponse.json(
       { error: "Failed to fetch trending movies" },
       { status: 500 },
