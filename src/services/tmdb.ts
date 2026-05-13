@@ -13,13 +13,13 @@ const BASE_URL = process.env.TMDB_BASE_URL;
 const TOKEN = process.env.TMDB_TOKEN;
 
 // TODO: apply these where they belong (discover)
-// Also need an order like desc in date
 const DEFAULT_PARAMS = {
   include_adult: false,
   certification_country: "US",
   "certification.lte": "R",
   with_original_language: "en",
   "vote_count.gte": 100,
+  sort_by: "primary_release_date.desc",
 };
 
 // --- Core fetcher ---
