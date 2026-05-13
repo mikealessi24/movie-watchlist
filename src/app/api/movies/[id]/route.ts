@@ -4,19 +4,20 @@ import { logError } from "@/lib/logger";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const id = Number(params.id);
+  const { id } = await params;
+  const movieId = Number(id);
 
-  if (isNaN(id)) {
+  if (isNaN(movieId)) {
     return NextResponse.json({ error: "Invalid movie ID" }, { status: 400 });
   }
 
   try {
-    const data = await getMovie(id);
+    const data = await getMovie(movieId);
     return NextResponse.json(data);
   } catch (error) {
-    logError(`GET /api/movies/${id}`, error);
+    logError(`GET /api/movies/${movieId}`, error);
     return NextResponse.json(
       { error: "Failed to fetch movie" },
       { status: 500 },
