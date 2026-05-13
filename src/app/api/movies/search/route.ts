@@ -5,7 +5,7 @@ import { cleanResults } from "@/lib/cleanResults";
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const query = searchParams.get("query");
-  const page = Number(searchParams.get("page") ?? 1);
+  const page = Math.min(Number(searchParams.get("page") ?? 1), 500);
 
   if (!query || query.trim() === "") {
     return NextResponse.json(

@@ -4,7 +4,7 @@ import { cleanResults } from "@/lib/cleanResults";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const page = Number(searchParams.get("page") ?? 1);
+  const page = Math.min(Number(searchParams.get("page") ?? 1), 500);
 
   try {
     const data = await getPopular(page);
