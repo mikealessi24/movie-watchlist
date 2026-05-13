@@ -1,28 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { getMovie } from "@/services/tmdb";
 
 export async function GET() {
-  const session = await getServerSession(authOptions);
+  const session = await auth.api.getSession({ headers: await headers() });
 
-  if (!session?.user?.email) {
+  if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    const user = await prisma.user.findUnique({
-      where: { email: session.user.email },
-    });
-
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
-
     const watchlist = await prisma.watchlistEntry.findMany({
-      where: { userId: user.id },
+      where: { userId: session.user.id },
       include: { movie: true },
       orderBy: { addedAt: "desc" },
     });
@@ -38,9 +30,9 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const session = await getServerSession(authOptions);
+  const session = await auth.api.getSession({ headers: await headers() });
 
-  if (!session?.user?.email) {
+  if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -50,23 +42,13 @@ export async function POST(req: NextRequest) {
 
     if (!tmdbId || isNaN(Number(tmdbId))) {
       return NextResponse.json(
-        { error: "a valid tmdbId is required" },
+        { error: "A valid tmdbId is required" },
         { status: 400 },
       );
     }
 
-    const user = await prisma.user.findUnique({
-      where: { email: session.user.email },
-    });
-
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
-
-    // get movie from tmdb
     const movieData = await getMovie(Number(tmdbId));
 
-    // upsert movie into cache
     const movie = await prisma.movie.upsert({
       where: { tmdbId: movieData.id },
       update: { cachedAt: new Date() },
@@ -81,10 +63,9 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // create watchlist entry
     const entry = await prisma.watchlistEntry.create({
       data: {
-        userId: user.id,
+        userId: session.user.id,
         movieId: movie.id,
         status: "WANT_TO_WATCH",
       },

@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
+import { authClient } from "@/lib/auth-client";
 import axios from "axios";
 import { watchlistKeys } from "@/lib/queryKeys";
 
 export function useWatchlist() {
-  const { data: session } = useSession();
+  const { data: session } = authClient.useSession();
 
   return useQuery({
     queryKey: watchlistKeys.lists(),

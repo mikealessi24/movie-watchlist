@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useSession, signOut } from "next-auth/react";
+import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -32,7 +32,7 @@ export default function Navbar({
   onChange,
   searchBarRef,
 }: NavbarProps) {
-  const { data: session } = useSession();
+  const { data: session } = authClient.useSession();
   const [open, setOpen] = useState(false);
 
   return (
@@ -80,7 +80,7 @@ export default function Navbar({
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
-                    onClick={() => signOut()}
+                    onClick={() => authClient.signOut()}
                     className="flex items-center gap-2 cursor-pointer text-destructive focus:text-destructive"
                   >
                     <IconLogout size={16} />

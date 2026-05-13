@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { authClient } from "@/lib/auth-client";
 import { IconBookmark, IconBookmarkFilled } from "@tabler/icons-react";
 import { useWatchlist } from "@/hooks/api/watchlist/useWatchlist";
 import { useAddToWatchlist } from "@/hooks/api/watchlist/useAddToWatchlist";
@@ -22,7 +22,8 @@ export default function WatchlistButton({
   movie,
   size = "icon-lg",
 }: WatchlistButtonProps) {
-  const { data: session } = useSession();
+  const { data: session } = authClient.useSession();
+
   const { data: watchlist, isLoading } = useWatchlist();
   const add = useAddToWatchlist();
   const remove = useRemoveFromWatchlist();

@@ -1,11 +1,12 @@
 "use client";
 
 import { useWatchlist } from "@/hooks/api/watchlist/useWatchlist";
+import type { auth } from "@/lib/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import WatchlistMovieCard from "./WatchlistMovieCard";
-import type { Session } from "next-auth";
 import type { WatchlistEntryWithMovie } from "@/types/watchlist";
 
+type Session = typeof auth.$Infer.Session;
 interface WatchlistProps {
   session: Session;
 }
