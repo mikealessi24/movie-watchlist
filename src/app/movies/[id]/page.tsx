@@ -41,8 +41,9 @@ export default async function MoviePage({ params }: MoviePageProps) {
           alt={movie.title}
           fill
           priority
+          unoptimized
           sizes="100vw"
-          className="object-cover transition-opacity duration-500"
+          className="object-cover object-top transition-opacity duration-500"
         />
 
         {/* Gradient overlay */}

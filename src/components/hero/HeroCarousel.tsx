@@ -29,8 +29,9 @@ export default function HeroCarousel({ movies }: HeroCarouselProps) {
                   alt={movie.title}
                   fill
                   priority={index === 0}
+                  unoptimized
                   sizes="100vw"
-                  className="object-cover"
+                  className="object-cover object-top transition-opacity duration-500"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute top-8 right-8">
