@@ -91,7 +91,7 @@ export default function SignInDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="h-screen w-screen max-w-screen rounded-none sm:rounded-md sm:h-auto sm:max-w-md">
+      <DialogContent>
         {state === "idle" && (
           <>
             <DialogHeader>

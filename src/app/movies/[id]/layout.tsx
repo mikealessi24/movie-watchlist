@@ -7,7 +7,7 @@ export default function MoviesLayout({
 }) {
   return (
     <>
-      <Navbar showSearch={false} />
+      <Navbar hideSearch />
       {children}
     </>
   );

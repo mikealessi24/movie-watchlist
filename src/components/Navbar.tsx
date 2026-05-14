@@ -24,13 +24,18 @@ interface NavbarProps {
   value?: string;
   onChange?: (query: string) => void;
   searchBarRef?: React.RefObject<HTMLInputElement | null>;
+  hideSearch?: boolean;
 }
+
+// TODO: showSearch / hideSearch logic needs some work
+// Two different display handlers is confusing
 
 export default function Navbar({
   showSearch,
   value,
   onChange,
   searchBarRef,
+  hideSearch = false,
 }: NavbarProps) {
   const { data: session } = authClient.useSession();
   const [open, setOpen] = useState(false);
@@ -40,11 +45,14 @@ export default function Navbar({
       <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
         <div className="mx-auto flex h-16 items-center gap-4 px-8">
           <span className="text-xl text-primary font-semibold tracking-tight"></span>
-
           <div
             className={cn(
               "flex justify-center w-full min-w-0 transition-all duration-200",
-              showSearch ? "visible" : "max-md:visible invisible",
+              showSearch
+                ? "visible"
+                : hideSearch
+                  ? "invisible"
+                  : "max-md:visible invisible",
             )}
           >
             <div className="w-full max-w-3xl">
